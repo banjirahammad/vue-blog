@@ -1,16 +1,22 @@
 <script setup>
-import { ref } from 'vue';
-
+import { ref, onBeforeMount } from 'vue';
+import { useRoute } from 'vue-router'
 import axios from 'axios';
+const route = useRoute()
 
 const newPostList = ref([])
-async function newPost() {
+// async function newPost() {
+//   let url = 'https://basic-blog.teamrabbil.com/api/post-newest'
+//   let res = await axios.get(url)
+//   newPostList.value = res['data']
+// }
+// newPost()
+
+onBeforeMount(async() => {
   let url = 'https://basic-blog.teamrabbil.com/api/post-newest'
   let res = await axios.get(url)
   newPostList.value = res['data']
-}
-newPost()
-
+})
 
 </script>
 
@@ -21,18 +27,14 @@ newPost()
         <div class="card">
           <img :src="item.img" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">{{ item.title }}</h5>
+            <h5 class="card-title fw-bold my-3">{{ item.title }}</h5>
             <p class="card-text">{{ item.short }}</p>
-            <a href="#" class="btn btn-primary">Details</a>
+            <RouterLink  :to="`/post-details/${item.id}`" class="btn btn-primary" >Details</RouterLink>
           </div>
         </div>
       </div>
     </div>
-
-
   </section>
-
-  <RouterView />
 </template>
 
 <style scoped></style>
