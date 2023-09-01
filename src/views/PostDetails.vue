@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router'
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ const post = reactive({})
 // }
 // PostDetails()
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
     const url = `https://basic-blog.teamrabbil.com/api/post-details/${route.params.id}`
     const res = await axios.get(url)
     Object.assign(post, res.data.postDetails)
